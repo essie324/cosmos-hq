@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cosmos — The Career Operating System for Beauty Professionals</title>
+<title>Cosmos Booking — The Career Operating System for Beauty Professionals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
@@ -542,13 +542,34 @@
   .foot-tag{font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
   .foot-links{display:flex;gap:1.8rem;font-size:.86rem;color:var(--muted)}
   .foot-links a:hover{color:var(--champagne)}
+
+  /* ---- PHONE: center everything ---- */
+  @media(max-width:640px){
+    #orbit{display:none}
+    .phase{padding-left:0;text-align:center;justify-items:center}
+    .ph-text{text-align:center}
+    .arc{justify-items:center}
+    .arc .row{grid-template-columns:1fr;gap:.3rem;text-align:center;justify-items:center}
+    .arc .lbl{padding-top:0}
+    .ph-price{justify-content:center}
+    .incl{justify-items:center}
+    .incl div{justify-content:center}
+    .door{text-align:center}
+    .door .go{justify-content:center}
+    .vega-sec{text-align:center}
+    .vega-points{justify-items:center}
+    .vega-points .vp{grid-template-columns:1fr;gap:.5rem;text-align:center;justify-items:center}
+    .foot-in{justify-content:center;text-align:center}
+    .foot-links{justify-content:center;flex-wrap:wrap}
+  }
+
 </style>
 </head>
 <body>
 
 <nav id="nav"><div class="wrap nav-in">
   <a href="#top" class="brand">
-    <span class="brand-orbit"><span class="bo bo1"></span><span class="bo bo2"></span><span class="brand-mark" role="img" aria-label="Cosmos Studios"></span></span><span>Cosmos&nbsp;Studios</span></a>
+    <span class="brand-orbit"><span class="bo bo1"></span><span class="bo bo2"></span><span class="brand-mark" role="img" aria-label="Cosmos Booking"></span></span><span>Cosmos&nbsp;Booking</span></a>
   <div class="nav-cta"><a href="apply.html" class="btn">Apply <span class="arrow">→</span></a></div>
 </div></nav>
 <span id="top"></span>
@@ -879,7 +900,7 @@
 
 <footer><div class="wrap foot-in">
   <div class="foot-brand">
-    <span class="brand-mark" role="img" aria-label="Cosmos Studios"></span>Cosmos&nbsp;Studios</div>
+    <span class="brand-mark" role="img" aria-label="Cosmos Booking"></span>Cosmos&nbsp;Booking</div>
   <div class="foot-tag">Endless possibilities</div>
   <div class="foot-links"><a href="#build">Build</a><a href="#grow">Grow</a><a href="#thrive">Thrive</a><a href="#vega">Vega</a></div>
 </div></footer>
