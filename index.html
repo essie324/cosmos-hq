@@ -97,8 +97,9 @@
   @keyframes rise{to{transform:none}}
   @media (prefers-reduced-motion: reduce){.hero h1 .ln span{transform:none;animation:none}}
   .hero-sub{margin-top:2rem;opacity:0;animation:fadein 1.2s ease 1s forwards}
-  .hero-cta{margin-top:2.6rem;display:flex;align-items:center;justify-content:flex-start;gap:1.4rem;flex-wrap:wrap;
+  .hero-cta{margin-top:2.6rem;display:flex;align-items:center;justify-content:center;gap:1.4rem;flex-wrap:wrap;
     opacity:0;animation:fadein 1.2s ease 1.3s forwards}
+  @media(min-width:901px){.hero-cta{justify-content:flex-start}}
   .vega-whisper{display:inline-flex;align-items:center;gap:.6em;font-size:.84rem;color:var(--muted)}
   .vega-dot{width:7px;height:7px;border-radius:50%;
     background:radial-gradient(circle at 30% 30%,#fff,var(--champagne));
@@ -563,6 +564,33 @@
     .foot-links{justify-content:center;flex-wrap:wrap}
   }
 
+
+  /* ---- phone scroll cue ---- */
+  .scroll-cue{position:absolute;z-index:9;right:15px;top:50%;transform:translateY(-50%);
+    width:4px;height:120px;border-radius:4px;background:rgba(176,144,79,.13);
+    pointer-events:none;opacity:0;transition:opacity .9s var(--ease)}
+  .hero-phone.cue .scroll-cue{opacity:1}
+  .scroll-cue i{position:absolute;left:0;right:0;top:0;height:38px;border-radius:4px;
+    background:linear-gradient(var(--champagne),var(--champagne-soft));
+    box-shadow:0 0 12px -1px rgba(176,144,79,.7);animation:cueGlide 2.8s var(--ease) infinite}
+  @keyframes cueGlide{0%{top:0;opacity:0}12%{opacity:1}50%{top:calc(100% - 38px);opacity:1}
+    64%{opacity:0}100%{top:0;opacity:0}}
+  .iphone.scrolled .scroll-cue{opacity:0}
+
+  /* ---- path cards illuminate on scroll ---- */
+  .door::before{content:"";position:absolute;top:0;left:-65%;width:55%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(216,195,154,.5),transparent);
+    transform:skewX(-16deg);opacity:0;pointer-events:none;z-index:2}
+  .door.in{border-color:var(--stone-deep);box-shadow:0 16px 46px -32px rgba(176,144,79,.55)}
+  .door.in::before{animation:doorSheen 1.5s var(--ease) both}
+  .door.d1.in::before{animation-delay:.15s}
+  .door.d2.in::before{animation-delay:.30s}
+  .door.d3.in::before{animation-delay:.45s}
+  @keyframes doorSheen{0%{left:-65%;opacity:0}20%{opacity:1}55%{opacity:1}100%{left:130%;opacity:0}}
+  .door:hover{transform:translateY(-6px);border-color:var(--stone-deep);box-shadow:0 30px 60px -40px rgba(29,25,22,.45)}
+  .door:hover::after{transform:scaleX(1)}
+  @media(prefers-reduced-motion:reduce){.door::before{display:none}.scroll-cue i{animation:none;top:0;opacity:.8}}
+
 </style>
 </head>
 <body>
@@ -593,6 +621,7 @@
     </div>
     <div class="hero-phone">
         <div class="iphone">
+          <span class="scroll-cue" aria-hidden="true"><i></i></span>
           <div class="iphone-screen">
             <span class="iphone-island"></span>
             <div class="iphone-status"><span>9:41</span><span class="ios-r"><svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.6" y="5" width="3" height="6" rx="1"/><rect x="9.2" y="2.8" width="3" height="8.2" rx="1"/><rect x="13.8" y="0.5" width="3" height="10.5" rx="1"/></svg><svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 11l2.5-3.1a3.7 3.7 0 0 0-5 0L8 11z"/><path d="M8 4.4c1.6 0 3.1.6 4.3 1.7l1.3-1.6A8.3 8.3 0 0 0 8 2.5 8.3 8.3 0 0 0 2.4 4.5l1.3 1.6A6.1 6.1 0 0 1 8 4.4z" opacity=".5"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="20" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="2.2" y="2.2" width="14" height="7.6" rx="1.6" fill="currentColor"/><path d="M22.5 4v4a2 2 0 0 0 0-4z" fill="currentColor" opacity=".4"/></svg></span></div>
@@ -914,6 +943,12 @@
   const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},
     {threshold:.12,rootMargin:"0px 0px -8% 0px"});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  (function(){var hp=document.querySelector('.hero-phone');if(!hp)return;
+    var scr=hp.querySelector('.iphone-screen');
+    var co=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)hp.classList.add('cue');});},{threshold:.4});
+    co.observe(hp);
+    if(scr)scr.addEventListener('scroll',function(){var ip=hp.querySelector('.iphone');if(ip)ip.classList.add('scrolled');},{once:true,passive:true});
+  })();
 
   /* ===== THE ORBIT: a Fibonacci-inspired arc that sweeps and widens per phase ===== */
   const journey=document.getElementById('journey');
